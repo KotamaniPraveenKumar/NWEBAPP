@@ -1,4 +1,78 @@
 import streamlit as st
+import base64
+
+# Add custom CSS
+def add_custom_css():
+    custom_css = """
+    <style>
+    body {
+        font-family: 'Poppins', Arial, sans-serif;
+        color: #2c3e50;
+        background-image: url("http://hintergrundbild.org/wallpaper/full/f/d/b/35908-full-size-vintage-hintergrundbilder-1920x1080-fuer-computer.jpg");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.85);
+        margin: 30px auto;
+        max-width: 800px;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(5px);
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        border-bottom: 3px solid #1e90ff;
+        padding-bottom: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin: 15px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        transition: background 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    li:hover {
+        background: #e0e0e0;
+        transform: translateY(-5px);
+    }
+
+    button {
+        padding: 10px 20px;
+        background: #1e90ff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    button:hover {
+        background: #0a74da;
+    }
+    </style>
+    """
+    st.markdown(custom_css, unsafe_allow_html=True)
 
 # Sample data for services
 services = {
@@ -52,19 +126,27 @@ services = {
 }
 
 # Streamlit App
-st.title("Service Categories")
+def main():
+    st.markdown('<div class="container">', unsafe_allow_html=True)
+    st.title("Service Categories")
+    add_custom_css()
 
-# Main navigation for categories
-category = st.selectbox("Select a Category", ["Select"] + list(services.keys()))
+    # Main navigation for categories
+    category = st.selectbox("Select a Category", ["Select"] + list(services.keys()))
 
-if category != "Select":
-    st.subheader(f"{category.capitalize()} Services")
-    subcategories = services[category]
+    if category != "Select":
+        st.subheader(f"{category.capitalize()} Services")
+        subcategories = services[category]
 
-    # Subcategory selection
-    subcategory = st.selectbox("Select a Subcategory", ["Select"] + list(subcategories.keys()))
+        # Subcategory selection
+        subcategory = st.selectbox("Select a Subcategory", ["Select"] + list(subcategories.keys()))
 
-    if subcategory != "Select":
-        description = subcategories[subcategory]
-        st.markdown(f"### {subcategory}")
-        st.write(description)
+        if subcategory != "Select":
+            description = subcategories[subcategory]
+            st.markdown(f"### {subcategory}")
+            st.write(description)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+if __name__ == "__main__":
+    main()
+
